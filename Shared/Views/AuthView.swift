@@ -1,10 +1,10 @@
 //
-//  AuthView.swift
-//  LoginFireBase
+//  ChatAppApp.swift
+//  Shared
 //
-//  Created by Francisco Misael Landero Ychante on 05/06/20.
-//  Copyright © 2020 Francisco Misael Landero Ychante. All rights reserved.
+//  Created by Francisco Misael Landero Ychante on 28/09/20.
 //
+
 
 import SwiftUI
 
@@ -33,17 +33,17 @@ struct SingInView: View {
              circleColorIcon()
                 .frame(width: geometry.size.width / 4, height: geometry.size.width / 4)
                 
-            Text("App Name")
+            Text("ChatApp")
                 .font(.largeTitle)
                 .foregroundColor(.blue)
-            Text("Ingresa para continuar")
+            Text("LogIn")
                 .font(.headline)
                 .foregroundColor(.secondary)
             
             VStack (spacing: 18){
                 HStack{
                     Image(systemName: "envelope.circle.fill")
-                    TextField("Correo electronico", text: self.$email)
+                    TextField("Email", text: self.$email)
                         .autocapitalization(.none)
                     
                 }
@@ -53,7 +53,7 @@ struct SingInView: View {
                 .foregroundColor(.blue)
                 HStack{
                     Image(systemName: "lock.circle.fill")
-                    SecureField("Contraseña", text: self.$password)
+                    SecureField("Pass", text: self.$password)
                 }
                 .padding(12)
                 .frame(minWidth:0, maxWidth: 400)
@@ -61,7 +61,7 @@ struct SingInView: View {
                 .foregroundColor(.blue)
                 NavigationLink(destination: resetPasswordView()) {
                    HStack{
-                       Text("¿Olvidaste tu contraseña?")
+                       Text("Forgot Password?")
                    }
                 }
                 
@@ -76,19 +76,19 @@ struct SingInView: View {
             
             Spacer()
             Button(action: self.signIn){
-               PrymaryButton(text: "Ingresa", icon: "chevron.right.circle.fill")
+               PrymaryButton(text: "LogIn", icon: "chevron.right.circle.fill")
             }
             
           
             NavigationLink(destination: signUpView()) {
                 VStack{
                     HStack {
-                        Text("¿Aún no tienes cuenta?")
+                        Text("Still Not have Account?")
                             .foregroundColor(.primary)
                     }
                     HStack{
                         Image(systemName: "person.crop.circle.fill.badge.plus")
-                        Text("Crea una cuenta ahora")
+                        Text("Sign Up Now")
                     }
                 }
             }
@@ -139,18 +139,18 @@ struct signUpView: View {
             circleColorIconSystem(name: "person.crop.circle.fill.badge.plus")
                 .frame(width: geometry.size.width / 3.4, height: geometry.size.width / 4)
             
-            Text("Crear una cuenta nueva")
+            Text("Sign Up")
                     .font(.largeTitle)
                     .foregroundColor(.blue)
 
-            Text("Registra tus datos para comenzar")
+            Text("Fill to start")
                 .font(.headline)
                 .foregroundColor(.secondary)
             
             VStack (spacing: 18){
                 HStack{
                     Image(systemName: "envelope.circle.fill")
-                    TextField("Correo electronico", text: self.$email)
+                    TextField("Email", text: self.$email)
                         .autocapitalization(.none)
                     
                 }
@@ -161,7 +161,7 @@ struct signUpView: View {
                 
                 HStack{
                     Image(systemName: "lock.circle.fill")
-                    SecureField("Contraseña", text: self.$password)
+                    SecureField("Pass", text: self.$password)
                 }
                 .padding(12)
                 .frame(minWidth:0, maxWidth: 400)
@@ -181,18 +181,18 @@ struct signUpView: View {
                 Spacer()
             
             Button(action: self.singUp){
-                PrymaryButton(text: "Crea una cuenta", icon: "person.crop.circle.fill.badge.plus")
+                PrymaryButton(text: "Sign Up", icon: "person.crop.circle.fill.badge.plus")
             }
             
-            NavigationLink(destination: Text("Terminos y condiciones")) {
+            NavigationLink(destination: Text("Legal")) {
                 VStack{
                         HStack {
-                            Text("Al registrarte se entiende que aceptas ")
+                            Text("Read or privacy policy")
                                 .foregroundColor(.primary)
                         }
                         HStack{
                             Image(systemName: "doc.plaintext")
-                            Text("Nuestros Terminos y condiciones")
+                            Text("Legal")
                         }
                     }
             }
@@ -241,25 +241,25 @@ struct resetPasswordView: View {
             circleColorIconSystem(name: "arrow.clockwise.circle.fill")
                 .frame(width: geometry.size.width / 3.4, height: geometry.size.width / 4)
             
-            Text("Recupera tu contraseña")
+            Text("Recovery Password")
                     .font(.largeTitle)
                     .foregroundColor(.blue)
 
-            Text("Ingresa tu correo y te enviaremos un mensaje para que puedas recuperar tu contraseña.")
+            Text("Fill your email to recover account.")
                 .font(.headline)
                 .foregroundColor(.secondary)
             
             VStack (spacing: 18){
                 HStack{
                     Image(systemName: "envelope.circle.fill")
-                    TextField("Correo electronico", text: self.$email)
+                    TextField("Email", text: self.$email)
                         .autocapitalization(.none)
                 }
                 .padding(12)
                 .frame(minWidth:0, maxWidth: 400)
                 .background(RoundedRectangle(cornerRadius: 50).strokeBorder(Color.blue))
                 .foregroundColor(.blue)
-                Text("Si tu correo esta registrado en nuestros servidores recibiras un mensaje en unos minutos.")
+                Text("If you have an account you would receive an email on a couple of minutes.")
                 .font(.headline)
                 .foregroundColor(.secondary)
             }
@@ -274,7 +274,7 @@ struct resetPasswordView: View {
                 Spacer()
             
             Button(action: self.resetPassword){
-                PrymaryButton(text: "Recuperar contraseña", icon: "arrow.clockwise.circle.fill")
+                PrymaryButton(text: "Recovery Password", icon: "arrow.clockwise.circle.fill")
             }
             
            

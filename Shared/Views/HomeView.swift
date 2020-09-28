@@ -8,8 +8,56 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @EnvironmentObject var session : SessionStore
+    @State private var selection = 0
+    
+    private var NavigationBartitles = ["Home", "Contacts", "Profile"]
+    
+    func getUser(){
+        session.listen()
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            TabView(selection: $selection){
+                Text("Hi \(session.session?.email ?? "No email")!")
+                .tabItem {
+                        VStack {
+                            Image(systemName: "house.fill")
+                            Text("Home")
+                        }
+                    }
+                    .tag(0)
+                
+                Text("Second View")
+                    .font(.title)
+                     
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "person.2")
+                            Text("Contacts")
+                        }
+                    }
+                    .tag(1)
+                UserSettingsView(session: self.session)
+                    .font(.title)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "person.crop.circle")
+                            Text("Profile")
+                        }
+                }
+                .tag(2)
+            }
+            .navigationBarTitle(NavigationBartitles[selection])
+            .navigationBarItems( trailing: HStack {
+                NavigationLink(destination: UserSettingsView(session: self.session).environmentObject(SessionStore()) ) {
+                               Image(systemName: "gear")
+                           }
+                
+            }.font(.headline))
+        }
     }
 }
 

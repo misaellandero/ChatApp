@@ -1,9 +1,8 @@
 //
-//  UIElementsView.swift
-//  LoginFireBase
+//  ChatAppApp.swift
+//  Shared
 //
-//  Created by Francisco Misael Landero Ychante on 05/06/20.
-//  Copyright © 2020 Francisco Misael Landero Ychante. All rights reserved.
+//  Created by Francisco Misael Landero Ychante on 28/09/20.
 //
 
 
@@ -17,7 +16,7 @@ struct ThemeColors {
 
 struct circleColorIcon : View {
     var body: some View {
-           Image(systemName: "moon.fill")
+           Image(systemName: "message.fill")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .padding()

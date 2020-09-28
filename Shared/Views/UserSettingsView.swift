@@ -1,9 +1,8 @@
 //
-//  UserSettingsView.swift
-//  LoginFireBase
+//  HomeView.swift
+//  ChatApp
 //
-//  Created by Francisco Misael Landero Ychante on 06/04/20.
-//  Copyright © 2020 Francisco Misael Landero Ychante. All rights reserved.
+//  Created by Francisco Misael Landero Ychante on 28/09/20.
 //
 
 import SwiftUI
@@ -13,7 +12,7 @@ struct UserSettingsView: View {
     var body: some View {
             List {
                 Section (header: HStack{Image(systemName: "person.crop.circle.fill")
-                    Text("Datos de la sesión")}){
+                    Text("User Data")}){
                     HStack{
                         Image(systemName: "envelope.circle.fill")
                         Text(String(session.session?.email ?? "No especificado")) 
@@ -21,37 +20,37 @@ struct UserSettingsView: View {
                     NavigationLink(destination: resetPasswordView()) {
                        HStack{
                         Image(systemName: "arrow.clockwise.circle.fill")
-                        Text("Restablece tu contraseña")
+                        Text("Recover PassWord")
                        }
                     }
                      
                     HStack{
                         Image(systemName: "xmark.circle.fill")
                         Button(action: session.signOut){
-                            Text("Salir")
+                            Text("Exit")
                         }
                     }
                     .foregroundColor(.red)
                 }
                 
                 Section (header: HStack{Image(systemName: "info.circle.fill")
-                    Text("Acerca de ")}){
+                    Text("About ")}){
                         HStack{
-                            Text("Version de la App")
+                            Text("Build")
                             Spacer()
                             Text("Alfa 0.1")
                                 .foregroundColor(.secondary)
                         }
-                        NavigationLink(destination: Text("Landercorp.mx")) {
+                        NavigationLink(destination: Text("Misael Landero Test App")) {
                             HStack{
-                                Text("Acerca del desarrollador")
+                                Text("About me")
                             }
                         }
                 }
             }
             .listStyle(GroupedListStyle())
             .environment(\.horizontalSizeClass, .regular)
-            .navigationBarTitle("Configuraciones")
+            .navigationBarTitle("User Settings")
     
     }
 }
