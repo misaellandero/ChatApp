@@ -8,18 +8,119 @@
 import SwiftUI
 
 struct ChatsView: View {
+    @EnvironmentObject var session : SessionStore
+    @EnvironmentObject var data : DataStore
+    
+    @State var messages : [Messages]
+    
+    @State var contact : Contacts
+    @State var message = ""
+    
+    @State var sender : String
+    @State var reciber : String
+  
+    var chats : [Messages] {
+        var chatMessages = [Messages]()
+        
+        for message in data.menssages {
+            
+            print("este mensaje lo mando \(message.uidOwner) y era para \(message.emailAdress)")
+            
+            if (message.uidOwner == sender && message.emailAdress == reciber) || (message.emailAdress == sender && message.uidOwner == reciber) {
+                print("este mensaje es de esta conversacion")
+                chatMessages.append(message)
+            } else {
+                print("este mensaje NO ES DE ESTA conversacion")
+            }
+        }
+        
+        chatMessages.sort {
+            $0.date < $1.date
+        }
+        
+        print(chatMessages)
+        
+        return chatMessages
+    }
+    
     var body: some View {
         NavigationView{
-            List{
-                MessageView(sender: false, text: "hi", date: Date(), user: "M")
                 
-                MessageView(sender: true, text: "hello", date: Date(), user: "J")
-                
-                MessageView(sender: false, text: "hi", date: Date(), user: "M")
-                
-                MessageView(sender: true, text: "hello", date: Date(), user: "J")
-            }.listStyle(InsetGroupedListStyle())
+                VStack{
+                    //Messages list
+                    List{
+                        
+                        ForEach(self.chats, id: \.self){ message in
+                            
+                            if message.uidOwner == sender {
+                                MessageView(sender: true, text: message.messages,date: message.date)
+                            } else {
+                                MessageView(sender: false, text: message.messages,date: message.date)
+                            }
+                            
+                        }
+                      
+                    }.listStyle(InsetGroupedListStyle())
+                    
+                    //User input Area
+                    HStack{
+                        Image(systemName: "message.fill")
+                        TextField("New Message", text: $message)
+                        
+                        if message != "" {
+                            Button(action: {
+                                self.sendMessage()
+                            }){
+                                circleColorIconSystem(name:  "paperplane.fill")
+                                    .frame(width: 50, height: 50)
+                            }
+                        }
+                    }
+                    .padding(12)
+                    .frame(minWidth:0, maxWidth: 400)
+                    .frame(minHeight: CGFloat(50))
+                    .background(RoundedRectangle(cornerRadius: 50).strokeBorder(Color.blue))
+                    .foregroundColor(.blue)
+                    
+                    .navigationBarTitle(contact.firstName, displayMode: .inline)
+                    
+                }
+            
+            
         }
+    }
+    
+    func getChats() -> [Messages] {
+        
+        var chatMessages = [Messages]()
+        
+        for message in messages {
+            
+            print("este mensaje lo mando \(message.uidOwner) y era para \(message.emailAdress)")
+            
+            if (message.uidOwner == sender && message.emailAdress == reciber) || (message.emailAdress == sender && message.uidOwner == reciber) {
+                print("este mensaje es de esta conversacion")
+                chatMessages.append(message)
+            } else {
+                print("este mensaje NO ES DE ESTA conversacion")
+            }
+        }
+        
+        chatMessages.sort {
+            $0.date < $1.date
+        }
+        
+        print(chatMessages)
+        
+        return chatMessages
+    }
+    
+    func sendMessage(){
+        let message = self.message
+        let id = session.user?.email ?? "no mail"
+        let email = contact.email
+        data.sendMessage(messages: message, uidOwner: id, emailAdress: email)
+        self.message = ""
     }
 }
 
@@ -28,7 +129,7 @@ struct MessageView: View {
     @State var sender : Bool
     @State var text : String
     @State var date : Date
-    @State var user : String
+    
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     
     var formatedDate: String {
@@ -56,22 +157,13 @@ struct MessageView: View {
                 if sender{
                     Spacer()
                 }
-                
-                if !sender{
-                    Image(systemName: "\(user).circle.fill")
-                        .foregroundColor(.secondary)
-                }
-                
-                Text("Hello world")
+                 
+                Text("\(text)")
                             .padding(10)
                             .foregroundColor(sender ? Color.white : Color.primary)
                             .background(sender ? Color.blue : Color(UIColor.secondarySystemGroupedBackground))
                     .cornerRadius(20, corners: sender ? [.bottomLeft ,.topLeft,.topRight] : [.bottomRight,.topLeft,.topRight])
                 
-                if sender{
-                    Image(systemName: "\(user).circle.fill")
-                        .foregroundColor(.secondary)
-                }
                 
                 if !sender{
                     Spacer()
@@ -86,14 +178,4 @@ struct MessageView: View {
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            MessageView(sender: false, text: "hi", date: Date(), user: "j")
-            
-            MessageView(sender: true, text: "hello", date: Date(), user: "m")
-        }
-        
-       
-    }
-}
+

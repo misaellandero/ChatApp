@@ -14,11 +14,25 @@ struct ContactsView: View {
     
     @State var showAddContact = false
     
+    var contacts : [Contacts] {
+        var contacts = [Contacts]()
+        
+        for contact in data.contacts {
+            if contact.uidOwner == session.user?.uid ?? "No user" {
+                contacts.append(contact)
+            }
+        }
+         
+         return contacts
+    }
+    
+    
     var body: some View {
         NavigationView{
                     List{
                         
-                        ForEach(data.contacts, id: \.self){ contac in
+                        ForEach(contacts, id: \.self){ contac in
+                            
                             if contac.uidOwner == session.user?.uid {
                                 NavigationLink(
                                     destination: ContactDetailView(contac: contac)){
@@ -28,6 +42,7 @@ struct ContactsView: View {
                         }
                         
                     }
+                    .listStyle(InsetGroupedListStyle())
                     .navigationTitle("Contacts")
                     
             .navigationBarItems(trailing:
@@ -36,12 +51,6 @@ struct ContactsView: View {
                                         showAddContact.toggle()
                                         }){
                                             Image(systemName: "person.crop.circle.fill.badge.plus")
-                                        }
-                                        
-                                        Button(action: {
-                                            data.reloadData()
-                                        }){
-                                            Image(systemName: "arrow.counterclockwise.circle.fill")
                                         }
                                     }
                                     )
@@ -105,7 +114,7 @@ struct NewContactView : View {
                     .foregroundColor(.blue)
                     
                     Button(action: {
-                        data.addContact(firstName: firstName, lastName: lastName, email: email, contactNumber: contactNumber, uidOwner: session.user!.uid)
+                        data.addContact(firstName: firstName, lastName: lastName, email: email, contactNumber: contactNumber, uidOwner: session.user?.uid ?? "No user")
                         presentationMode.wrappedValue.dismiss()
                         
                     }){
@@ -135,6 +144,7 @@ struct ContactDetailView : View {
     
     @State var contac: Contacts
     @EnvironmentObject var data : DataStore
+    @EnvironmentObject var session : SessionStore
     
     var letterIcon : String {
         let str = Array(contac.firstName)[0]
@@ -200,7 +210,8 @@ struct ContactDetailView : View {
             Alert(title: Text("Important"), message: Text("User dont have account on AppChat! call him to invite"), dismissButton: .default(Text("Got it!")))
         }
         .sheet(isPresented: $showChatView) {
-            ChatsView()
+              
+            ChatsView(messages: data.menssages, contact: self.contac, sender: self.session.user?.email ?? "No email", reciber: self.contac.email)
         }
         .navigationBarTitle(contac.firstName, displayMode: .inline)
         .navigationBarItems(trailing:

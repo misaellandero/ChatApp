@@ -18,10 +18,12 @@ class DataStore : ObservableObject {
     init() {
         getUserContacts()
         getAllUsers()
+        getUserMessages()
     }
-    
+    // MARK: - database
     let dataBase = Firestore.firestore()
     
+    // MARK: - get userContacts
     func getUserContacts(){
         dataBase.collection("user_contacts").addSnapshotListener{ (snap, error) in
             
@@ -54,6 +56,42 @@ class DataStore : ObservableObject {
             }
         }
     }
+    
+    // MARK: - get all userMessages
+    func getUserMessages(){
+        dataBase.collection("Messages").addSnapshotListener{ (snap, error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let data = snap else {return}
+            
+            data.documentChanges.forEach{ (doc) in
+                if doc.type == .added {
+                    let message = try! doc.document.data(as: Messages.self)!
+                    DispatchQueue.main.async {
+                            self.menssages.append(message)
+                    }
+                }
+            }
+        }
+    }
+    
+    func sendMessage(messages: String, uidOwner: String, emailAdress: String){
+      
+        let message = Messages(messages: messages, uidOwner: uidOwner, emailAdress: emailAdress, date: Date())
+        
+        let _ = try! dataBase.collection("Messages").addDocument(from: message){ (error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    // MARK: - get all App Users
     
     func getAllUsers(){
         dataBase.collection("users").addSnapshotListener{ (snap, error) in
