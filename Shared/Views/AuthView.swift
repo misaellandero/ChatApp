@@ -175,8 +175,7 @@ struct signUpView: View {
                     .frame(minWidth:0, maxWidth: 400)
                     .background(RoundedRectangle(cornerRadius: 50).strokeBorder(Color.blue))
                     .foregroundColor(.blue)
-                     
-                    
+                      
                 }
               
                 HStack{

@@ -64,6 +64,8 @@ struct NewContactView : View {
     @EnvironmentObject var data : DataStore
     @Environment(\.presentationMode) var presentationMode
     
+    
+    
     var body: some View{
         NavigationView{
             ScrollView {
@@ -132,9 +134,47 @@ struct NewContactView : View {
 struct ContactDetailView : View {
     
     @State var contac: Contacts
+    @EnvironmentObject var data : DataStore
+    
+    var letterIcon : String {
+        let str = Array(contac.firstName)[0]
+        return str.lowercased()
+    }
+    
+    @State private var showChatView = false
+    @State private var showingAlert = false
     
     var body: some View{
         List{
+            HStack(alignment: .center){
+                Spacer()
+                Button(action:{}){
+                    Image(systemName: "phone.fill")
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.green)
+                .cornerRadius(20)
+                
+                Spacer()
+                circleColorIconSystem(name: "\(letterIcon).circle.fill")
+                    .padding()
+                    .frame(width: 150)
+                Spacer()
+                
+                Button(action:{
+                    self.sendMessage()
+                }){
+                    Image(systemName: "message.fill")
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.blue)
+                .cornerRadius(20)
+                Spacer()
+            }
+            .buttonStyle(BorderlessButtonStyle())
+            
             Section(header: Text("Name")) {
                 HStack{
                     Text(contac.firstName)
@@ -156,6 +196,12 @@ struct ContactDetailView : View {
            
         }
         .listStyle(InsetGroupedListStyle())
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Important"), message: Text("User dont have account on AppChat! call him to invite"), dismissButton: .default(Text("Got it!")))
+        }
+        .sheet(isPresented: $showChatView) {
+            ChatsView()
+        }
         .navigationBarTitle(contac.firstName, displayMode: .inline)
         .navigationBarItems(trailing:
             HStack{
@@ -164,11 +210,22 @@ struct ContactDetailView : View {
                 }
                 .accentColor(.green)
                
-                Button(action:{}){
+                Button(action:{
+                    self.sendMessage()
+                    
+                }){
                     Image(systemName: "message.fill")
                 }
                 .accentColor(.blue)
         })
+    }
+    
+    func sendMessage(){
+        if contac.haveChat(appUsers: data.users) {
+            self.showChatView.toggle()
+        } else {
+            self.showingAlert.toggle()
+        }
     }
 }
 

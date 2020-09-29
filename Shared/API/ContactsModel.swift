@@ -26,6 +26,14 @@ struct Contacts : Codable, Identifiable, Hashable {
         case uidOwner
     }
     
+    func haveChat(appUsers: [Users]) -> Bool{
+        print(appUsers)
+        let results = appUsers.filter { $0.email == self.email }
+        let exists = results.isEmpty == false
+        return exists
+    }
+    
+    
 }
 
 

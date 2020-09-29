@@ -23,7 +23,15 @@ struct HomeView: View {
     var body: some View {
             TabView(selection: $selection){
                 NavigationView{
-                    Text("Hi \(session.session?.email ?? "No email")!")
+                    List{
+                        Text("Hi \(session.session?.email ?? "No email")!")
+                        
+                        ForEach(data.users, id: \.self){
+                            user in
+                            Text("\(user.email)")
+                        }
+                    }
+                    
                         .navigationTitle("Home")
                 }
                

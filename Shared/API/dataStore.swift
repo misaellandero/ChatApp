@@ -17,6 +17,7 @@ class DataStore : ObservableObject {
     
     init() {
         getUserContacts()
+        getAllUsers()
     }
     
     let dataBase = Firestore.firestore()
@@ -85,9 +86,7 @@ class DataStore : ObservableObject {
                 matchs += 1
             }
         }
-        
-        
-        
+         
         if  matchs > 1 {
             
             return false
