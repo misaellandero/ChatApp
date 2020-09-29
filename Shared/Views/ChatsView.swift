@@ -89,6 +89,7 @@ struct userChatViewOpen : View {
         let exists = results.isEmpty == false
         
         if exists {
+            
             self.contact = results.first!
         }
     
