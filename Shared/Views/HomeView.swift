@@ -22,7 +22,8 @@ struct HomeView: View {
     
     var body: some View {
             TabView(selection: $selection){
-                NavigationView{
+                /*NavigationView{
+                   
                     List{
                         Text("Hi \(session.session?.email ?? "No email")!")
                         
@@ -33,8 +34,8 @@ struct HomeView: View {
                     }
                     
                         .navigationTitle("Home")
-                }
-               
+                }*/
+               UserChatsView()
                 .tabItem {
                         VStack {
                             Image(systemName: "house.fill")

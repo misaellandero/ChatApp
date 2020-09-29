@@ -14,11 +14,13 @@ class DataStore : ObservableObject {
     @Published var menssages : [Messages] = []
     @Published var contacts : [Contacts] = []
     @Published var users : [Users] = []
-    
+    @Published var chats : [Chats] = []
+   
     init() {
         getUserContacts()
         getAllUsers()
         getUserMessages()
+        getAllChats()
     }
     // MARK: - database
     let dataBase = Firestore.firestore()
@@ -142,6 +144,40 @@ class DataStore : ObservableObject {
         }
          
         
+    }
+    
+    // MARK: - get all Chats
+    
+    func getAllChats(){
+        dataBase.collection("Chats").addSnapshotListener{ (snap, error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let data = snap else {return}
+            
+            data.documentChanges.forEach{ (doc) in
+                if doc.type == .added {
+                    let chat = try! doc.document.data(as: Chats.self)!
+                    DispatchQueue.main.async {
+                            self.chats.append(chat)
+                    }
+                }
+            }
+        }
+    }
+    
+    func addChat(userA: String, userB: String){
+        let chat =  Chats(userA: userA, userB: userB)
+     
+        let _ = try! dataBase.collection("Chats").addDocument(from: chat){ (error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+        }
     }
     
     func reloadData(){

@@ -233,11 +233,26 @@ struct ContactDetailView : View {
     
     func sendMessage(){
         if contac.haveChat(appUsers: data.users) {
+            let userA = session.user?.email ?? "No user"
+            let userB = contac.email
+            if !isDuplicated(chats: data.chats, userA: userA, userB: userB){
+                data.addChat(userA: userA, userB: userB)
+            }
             self.showChatView.toggle()
         } else {
             self.showingAlert.toggle()
         }
     }
+}
+
+func isDuplicated(chats: [Chats], userA: String, userB: String) -> Bool{
+  
+    let resultsA = chats.filter { $0.userA == userA && $0.userB == userB }
+    let resultsB = chats.filter { $0.userA == userB && $0.userB == userA }
+    
+    let exists = (resultsA.isEmpty == false) || (resultsB.isEmpty == false)
+
+    return exists
 }
 
 struct ContactView : View {
