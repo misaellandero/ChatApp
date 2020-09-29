@@ -126,14 +126,16 @@ struct signUpView: View {
     @State var keyboardValue : CGFloat = 0
     
     @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var data : DataStore
     
     func singUp(){
         session.signUp(email: email, password: password) { (result, error) in
             if let error = error {
                 self.error = error.localizedDescription
             } else {
-                self.email = ""
-                self.password = ""
+                
+                    self.email = ""
+                    self.password = ""
             }
             
         }
@@ -186,7 +188,11 @@ struct signUpView: View {
                 }.padding(10)
                     Spacer()
                 
-                Button(action: self.singUp){
+                Button(action: {
+                    if data.addUser(email: email) {
+                        self.singUp()
+                    }
+                }){
                     PrymaryButton(text: "Sign Up", icon: "person.crop.circle.fill.badge.plus")
                 }
                 

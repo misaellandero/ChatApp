@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var session : SessionStore
+    @EnvironmentObject var data : DataStore
     
     func getUser(){
         session.listen()
@@ -17,7 +18,7 @@ struct ContentView: View {
     var body: some View {
         Group{
             if (session.session != nil) {
-                HomeView()
+                HomeView() 
             } else {
                 AuthView()
             }

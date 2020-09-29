@@ -10,8 +10,10 @@ import Firebase
 
 
 class DataStore : ObservableObject {
+     
     @Published var menssages : [Messages] = []
     @Published var contacts : [Contacts] = []
+    @Published var users : [Users] = []
     
     init() {
         getUserContacts()
@@ -33,11 +35,78 @@ class DataStore : ObservableObject {
                 if doc.type == .added {
                     let contact = try! doc.document.data(as: Contacts.self)!
                     DispatchQueue.main.async {
-                        self.contacts.append(contact)
+                            self.contacts.append(contact)
                     }
                 }
             }
-            
         }
+    }
+    
+    func addContact(firstName: String, lastName: String, email: String, contactNumber: String, uidOwner: String){
+        
+        let contact = Contacts(firstName: firstName, lastName: lastName, email: email, contactNumber: contactNumber, uidOwner: uidOwner)
+        
+        let _ = try! dataBase.collection("user_contacts").addDocument(from: contact){ (error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+        }
+    }
+    
+    func getAllUsers(){
+        dataBase.collection("users").addSnapshotListener{ (snap, error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let data = snap else {return}
+            
+            data.documentChanges.forEach{ (doc) in
+                if doc.type == .added {
+                    let user = try! doc.document.data(as: Users.self)!
+                    DispatchQueue.main.async {
+                            self.users.append(user)
+                    }
+                }
+            }
+        }
+    }
+    
+    func addUser(email: String) -> Bool {
+        
+        let newUser = Users(email: email)
+        var matchs = 0
+        
+        for user in users {
+            if user.email == newUser.email {
+                matchs += 1
+            }
+        }
+        
+        
+        
+        if  matchs > 1 {
+            
+            return false
+            
+        } else {
+            
+            let _ = try! dataBase.collection("users").addDocument(from: newUser){ (error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                    return
+                }
+            }
+             
+            return true
+        }
+         
+        
+    }
+    
+    func reloadData(){
     }
 }

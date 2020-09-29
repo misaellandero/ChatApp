@@ -56,6 +56,23 @@ struct PrymaryButton : View {
        }
 }
 
+struct CancelButton : View {
+    let text : String
+    let icon : String
+    var body: some View {
+            HStack{
+                Image(systemName: icon)
+                Text(text)
+            }
+            .font(.headline)
+            .frame(minWidth:0, maxWidth: 300)
+            .frame(height:50)
+            .foregroundColor(.white)
+            .background(LinearGradient(gradient: Gradient(colors: [.pink,.red]), startPoint: .top, endPoint: .bottom) )
+            .cornerRadius(50)
+       }
+}
+
 struct UIElementsView: View {
     var body: some View {
         Group{

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserSettingsView: View {
     @ObservedObject var session : SessionStore
+    @EnvironmentObject var data : DataStore
     var body: some View {
         NavigationView{
             List {
@@ -27,7 +28,11 @@ struct UserSettingsView: View {
                      
                     HStack{
                         Image(systemName: "xmark.circle.fill")
-                        Button(action: session.signOut){
+                        Button(action: {
+                            session.signOut()
+                            data.reloadData()
+                            
+                        }){
                             Text("Exit")
                         }
                     }

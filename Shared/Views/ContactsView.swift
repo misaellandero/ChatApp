@@ -8,22 +8,123 @@
 import SwiftUI
 
 struct ContactsView: View {
+    
     @EnvironmentObject var session : SessionStore
     @EnvironmentObject var data : DataStore
     
+    @State var showAddContact = false
+    
     var body: some View {
         NavigationView{
-            List{
-                ForEach(data.contacts){ contac in
+                    List{
+                        
+                        ForEach(data.contacts, id: \.self){ contac in
+                            if contac.uidOwner == session.user?.uid {
+                                NavigationLink(
+                                    destination: ContactDetailView(contac: contac)){
+                                    ContactView(contac: contac)
+                                }
+                            } 
+                        }
+                        
+                    }
+                    .navigationTitle("Contacts")
                     
-                    NavigationLink(
-                        destination: ContactDetailView(contac: contac)){
-                        ContactView(contac: contac)
+            .navigationBarItems(trailing:
+                                    HStack{
+                                        Button(action: {
+                                        showAddContact.toggle()
+                                        }){
+                                            Image(systemName: "person.crop.circle.fill.badge.plus")
+                                        }
+                                        
+                                        Button(action: {
+                                            data.reloadData()
+                                        }){
+                                            Image(systemName: "arrow.counterclockwise.circle.fill")
+                                        }
+                                    }
+                                    )
+        }
+        .sheet(isPresented:$showAddContact){
+            NewContactView()
+        }
+    }
+}
+
+struct NewContactView : View {
+    
+    @State var firstName = ""
+    @State var lastName = ""
+    @State var email = ""
+    @State var contactNumber = ""
+    @State var uidOwner = ""
+    
+    @EnvironmentObject var session : SessionStore
+    @EnvironmentObject var data : DataStore
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View{
+        NavigationView{
+            ScrollView {
+                VStack(spacing: 20){
+                    
+                    circleColorIconSystem(name: "person.crop.circle.fill.badge.plus")
+                        .padding()
+                        .frame(width: 250)
+                    
+                    HStack{
+                        Image(systemName: "person.2")
+                        TextField("firstName", text: $firstName)
+                        TextField("lastName", text: $lastName)
+                    }
+                    .padding(12)
+                    .frame(minWidth:0, maxWidth: 400)
+                    .background(RoundedRectangle(cornerRadius: 50).strokeBorder(Color.blue))
+                    .foregroundColor(.blue)
+                    
+                    HStack{
+                        Image(systemName: "envelope.circle.fill")
+                         TextField("email", text: $email)
+                         .autocapitalization(.none)
+                    }
+                    .padding(12)
+                    .frame(minWidth:0, maxWidth: 400)
+                    .background(RoundedRectangle(cornerRadius: 50).strokeBorder(Color.blue))
+                    .foregroundColor(.blue)
+                    
+                    HStack{
+                        Image(systemName: "phone.fill")
+                        TextField("contactNumber", text: $contactNumber)
+                    }
+                    .padding(12)
+                    .frame(minWidth:0, maxWidth: 400)
+                    .background(RoundedRectangle(cornerRadius: 50).strokeBorder(Color.blue))
+                    .foregroundColor(.blue)
+                    
+                    Button(action: {
+                        data.addContact(firstName: firstName, lastName: lastName, email: email, contactNumber: contactNumber, uidOwner: session.user!.uid)
+                        presentationMode.wrappedValue.dismiss()
+                        
+                    }){
+                       PrymaryButton(text: "Save", icon: "plus.circle")
+                    }
+                    
+                    Button(action: {
+                        
+                            presentationMode.wrappedValue.dismiss()
+                        
+                    }){
+                        CancelButton(text: "Cancel", icon: "xmark.circle.fill")
                     }
                     
                 }
+                .frame(minWidth:0, maxWidth: 300)
+                .padding()
+                Spacer()
             }
-            .navigationTitle("Contacts")
+            .navigationBarTitle("New Contact", displayMode: .inline)
+            
         }
     }
 }
@@ -49,32 +150,25 @@ struct ContactDetailView : View {
                 HStack{
                     Text(contac.contactNumber)
                 }
-                HStack{
-                    Spacer()
-                    Button(action:{}){
-                        Image(systemName: "phone.fill")
-                    }
-                    .padding()
-                    .background(Color.green)
-                    .cornerRadius(20)
-                    .foregroundColor(.white)
-                    Spacer()
-                    Button(action:{}){
-                        Image(systemName: "message.fill")
-                    }
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(20)
-                    .foregroundColor(.white)
-                    Spacer()
-                }
+                
             }
             
            
         }
         .listStyle(InsetGroupedListStyle())
         .navigationBarTitle(contac.firstName, displayMode: .inline)
-        
+        .navigationBarItems(trailing:
+            HStack{
+                Button(action:{}){
+                    Image(systemName: "phone.fill")
+                }
+                .accentColor(.green)
+               
+                Button(action:{}){
+                    Image(systemName: "message.fill")
+                }
+                .accentColor(.blue)
+        })
     }
 }
 
