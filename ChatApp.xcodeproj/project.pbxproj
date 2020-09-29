@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F22CE292522B41000ABDC2E /* ContactsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE282522B40F00ABDC2E /* ContactsModel.swift */; };
+		7F22CE2A2522B41000ABDC2E /* ContactsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE282522B40F00ABDC2E /* ContactsModel.swift */; };
+		7F22CE2E2522B44000ABDC2E /* MessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE2D2522B43F00ABDC2E /* MessagesModel.swift */; };
+		7F22CE2F2522B44000ABDC2E /* MessagesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE2D2522B43F00ABDC2E /* MessagesModel.swift */; };
+		7F22CE642522C2DC00ABDC2E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE632522C2DC00ABDC2E /* DataStore.swift */; };
+		7F22CE652522C2DC00ABDC2E /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE632522C2DC00ABDC2E /* DataStore.swift */; };
+		7F22CE6D2522CE9F00ABDC2E /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE6C2522CE9F00ABDC2E /* ContactsView.swift */; };
+		7F22CE6E2522CE9F00ABDC2E /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE6C2522CE9F00ABDC2E /* ContactsView.swift */; };
+		7F22CE722522DA1500ABDC2E /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE712522DA1500ABDC2E /* ChatsView.swift */; };
+		7F22CE732522DA1600ABDC2E /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F22CE712522DA1500ABDC2E /* ChatsView.swift */; };
 		7FADCD9125227C7700FA8632 /* ChatAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FADCD7E25227C6F00FA8632 /* ChatAppApp.swift */; };
 		7FADCD9225227C7700FA8632 /* ChatAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FADCD7E25227C6F00FA8632 /* ChatAppApp.swift */; };
 		7FADCD9325227C7700FA8632 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FADCD7F25227C6F00FA8632 /* ContentView.swift */; };
@@ -30,6 +40,11 @@
 		39E62E9990D00D21DBB957DC /* Pods-ChatApp (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp (iOS).release.xcconfig"; path = "Target Support Files/Pods-ChatApp (iOS)/Pods-ChatApp (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		47B4352A3FEABE168F7C8FF8 /* Pods_ChatApp__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51619219D7B67BCBCF2B81E6 /* Pods_ChatApp__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F22CE282522B40F00ABDC2E /* ContactsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactsModel.swift; path = Shared/API/ContactsModel.swift; sourceTree = SOURCE_ROOT; };
+		7F22CE2D2522B43F00ABDC2E /* MessagesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesModel.swift; sourceTree = "<group>"; };
+		7F22CE632522C2DC00ABDC2E /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		7F22CE6C2522CE9F00ABDC2E /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		7F22CE712522DA1500ABDC2E /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
 		7FADCD7E25227C6F00FA8632 /* ChatAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppApp.swift; sourceTree = "<group>"; };
 		7FADCD7F25227C6F00FA8632 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7FADCD8025227C7700FA8632 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +147,8 @@
 		7FADCDA225227CA800FA8632 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				7F22CE282522B40F00ABDC2E /* ContactsModel.swift */,
+				7F22CE2D2522B43F00ABDC2E /* MessagesModel.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -140,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				7FADCDE32522834900FA8632 /* SessionStore.swift */,
+				7F22CE632522C2DC00ABDC2E /* DataStore.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -149,6 +167,8 @@
 			children = (
 				7FADCDE72522835800FA8632 /* AuthView.swift */,
 				7FADCDED252283F600FA8632 /* HomeView.swift */,
+				7F22CE6C2522CE9F00ABDC2E /* ContactsView.swift */,
+				7F22CE712522DA1500ABDC2E /* ChatsView.swift */,
 				7FADCDF22522867100FA8632 /* UserSettingsView.swift */,
 				7FADCDE82522835800FA8632 /* UIElementsView.swift */,
 			);
@@ -345,8 +365,13 @@
 				7FADCD9325227C7700FA8632 /* ContentView.swift in Sources */,
 				7FADCD9125227C7700FA8632 /* ChatAppApp.swift in Sources */,
 				7FADCDEE252283F600FA8632 /* HomeView.swift in Sources */,
+				7F22CE722522DA1500ABDC2E /* ChatsView.swift in Sources */,
+				7F22CE2E2522B44000ABDC2E /* MessagesModel.swift in Sources */,
 				7FADCDE92522835800FA8632 /* AuthView.swift in Sources */,
 				7FADCDF32522867100FA8632 /* UserSettingsView.swift in Sources */,
+				7F22CE642522C2DC00ABDC2E /* DataStore.swift in Sources */,
+				7F22CE292522B41000ABDC2E /* ContactsModel.swift in Sources */,
+				7F22CE6D2522CE9F00ABDC2E /* ContactsView.swift in Sources */,
 				7FADCDE42522834900FA8632 /* SessionStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,10 +380,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F22CE2A2522B41000ABDC2E /* ContactsModel.swift in Sources */,
+				7F22CE652522C2DC00ABDC2E /* DataStore.swift in Sources */,
+				7F22CE2F2522B44000ABDC2E /* MessagesModel.swift in Sources */,
 				7FADCDF42522867100FA8632 /* UserSettingsView.swift in Sources */,
+				7F22CE732522DA1600ABDC2E /* ChatsView.swift in Sources */,
 				7FADCDEF252283F600FA8632 /* HomeView.swift in Sources */,
 				7FADCD9425227C7700FA8632 /* ContentView.swift in Sources */,
 				7FADCD9225227C7700FA8632 /* ChatAppApp.swift in Sources */,
+				7F22CE6E2522CE9F00ABDC2E /* ContactsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

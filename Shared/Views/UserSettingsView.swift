@@ -10,12 +10,13 @@ import SwiftUI
 struct UserSettingsView: View {
     @ObservedObject var session : SessionStore
     var body: some View {
+        NavigationView{
             List {
                 Section (header: HStack{Image(systemName: "person.crop.circle.fill")
                     Text("User Data")}){
                     HStack{
                         Image(systemName: "envelope.circle.fill")
-                        Text(String(session.session?.email ?? "No especificado")) 
+                        Text(String(session.session?.email ?? "No especificado"))
                     }
                     NavigationLink(destination: resetPasswordView()) {
                        HStack{
@@ -51,6 +52,7 @@ struct UserSettingsView: View {
             .listStyle(GroupedListStyle())
             .environment(\.horizontalSizeClass, .regular)
             .navigationBarTitle("User Settings")
+        }
     
     }
 }

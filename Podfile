@@ -8,7 +8,8 @@ target 'ChatApp (iOS)' do
   # https://firebase.google.com/docs/ios/setup#available-pods
   # Pods for ChatApp (iOS)
 	pod 'Firebase/Auth'
-  	pod 'Firebase/Firestore'
+  pod 'Firebase/Firestore'
+  pod 'FirebaseFirestoreSwift'
 	pod 'Firebase/Storage'
 
 end

@@ -17,7 +17,9 @@ struct ChatAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(SessionStore())
+            ContentView()
+                .environmentObject(SessionStore())
+                .environmentObject(DataStore())
         }
     }
 }

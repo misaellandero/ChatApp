@@ -10,7 +10,9 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject var session : SessionStore
+    @EnvironmentObject var data : DataStore
     @State private var selection = 0
+    
     
     private var NavigationBartitles = ["Home", "Contacts", "Profile"]
     
@@ -19,9 +21,12 @@ struct HomeView: View {
     }
     
     var body: some View {
-        NavigationView{
             TabView(selection: $selection){
-                Text("Hi \(session.session?.email ?? "No email")!")
+                NavigationView{
+                    Text("Hi \(session.session?.email ?? "No email")!")
+                        .navigationTitle("Home")
+                }
+               
                 .tabItem {
                         VStack {
                             Image(systemName: "house.fill")
@@ -30,8 +35,7 @@ struct HomeView: View {
                     }
                     .tag(0)
                 
-                Text("Second View")
-                    .font(.title)
+                    ContactsView()
                      
                     .tabItem {
                         VStack {
@@ -40,8 +44,9 @@ struct HomeView: View {
                         }
                     }
                     .tag(1)
-                UserSettingsView(session: self.session)
-                    .font(.title)
+                
+                    UserSettingsView(session: self.session)
+                        
                     .tabItem {
                         VStack {
                             Image(systemName: "person.crop.circle")
@@ -50,14 +55,8 @@ struct HomeView: View {
                 }
                 .tag(2)
             }
-            .navigationBarTitle(NavigationBartitles[selection])
-            .navigationBarItems( trailing: HStack {
-                NavigationLink(destination: UserSettingsView(session: self.session).environmentObject(SessionStore()) ) {
-                               Image(systemName: "gear")
-                           }
-                
-            }.font(.headline))
-        }
+         
+        
     }
 }
 
